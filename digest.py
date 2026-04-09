@@ -129,8 +129,7 @@ def format_digest(posts: list, since: datetime, until: datetime) -> str:
     date_to   = until.strftime("%d.%m.%Y")
 
     lines = [
-        f"📊 **Дайджест за неделю** {date_from}–{date_to}",
-        f"Топ-{len(posts)} постов по Engagement Rate\n",
+        f"📊 **дайджест за неделю** {date_from}–{date_to}",
     ]
 
     for i, p in enumerate(posts, start=1):
