@@ -123,7 +123,7 @@ async def fetch_channel_posts(client: Client, channel: str, since: datetime) -> 
 
         text = get_post_text(msg)
             # для альбомов берём подпись из кэша если текущее сообщение без текста
-            if msg.media_group_id and msg.media_group_id in captions_cache:
+            if msg.media_group_id and msg.media_group_id in captions_cache: captions_cache[msg.media_group_id] = msg.text or msg.caption
                 if not (msg.text or msg.caption):
                     text = captions_cache[msg.media_group_id]
 
