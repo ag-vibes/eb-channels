@@ -84,6 +84,7 @@ def make_post_link(channel: str, message_id: int) -> str:
 
 async def fetch_channel_posts(client: Client, channel: str, since: datetime) -> list:
     posts = []
+    captions_cache = {}  # grouped_id → текст подписи
     raw_messages = []
 
     try:
@@ -99,6 +100,7 @@ async def fetch_channel_posts(client: Client, channel: str, since: datetime) -> 
     except Exception as e:
         print(f"  ❌ Ошибка при чтении {channel}: {e}")
 
+    
     # Обрабатываем от старых к новым — тогда подпись альбома
     # попадает в кэш раньше, чем сообщение с реакциями
     captions_cache = {}
@@ -119,9 +121,11 @@ async def fetch_channel_posts(client: Client, channel: str, since: datetime) -> 
 
         er = reactions_total / msg.views
 
-        text = msg.text or msg.caption or ""
-        if not text and msg.media_group_id and msg.media_group_id in captions_cache:
-            text = captions_cache[msg.media_group_id]
+        text = get_post_text(msg)
+            # для альбомов берём подпись из кэша если текущее сообщение без текста
+            if msg.media_group_id and msg.media_group_id in captions_cache:
+                if not (msg.text or msg.caption):
+                    text = captions_cache[msg.media_group_id]
 
         posts.append({
             "channel":   channel,
