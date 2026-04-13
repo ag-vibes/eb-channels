@@ -129,9 +129,10 @@ def format_digest(posts: list, since: datetime, until: datetime) -> str:
     date_to   = until.strftime("%d.%m.%Y")
 
     lines = [
-        f"📊 **дайджест за неделю** {date_from}–{date_to}",
+        f"📊 **дайджест за неделю** {date_from}–{date_to}\n",
     ]
 
+    
     for i, p in enumerate(posts, start=1):
         er_pct  = p["er"] * 100
         summary = make_summary(p["text"])
