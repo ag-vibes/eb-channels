@@ -57,7 +57,8 @@ CHANNELS = [
     "yandex",
     "beelinetech",
     "ecom_tech_channel",
-    "cloudruprovider"
+    "cloudruprovider",
+    "KudaidtivIT"
     # ...
 ]
 
